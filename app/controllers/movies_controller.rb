@@ -43,7 +43,8 @@ class MoviesController < ApplicationController
   end
   
   def sort
-    #@type = params[:id]
+    @type = params[:type]
+    Movie.all.sort_by { |m| m.group.name.downcase }
     #@movies = Movie.all
     #redirect_to movies_path
   end
