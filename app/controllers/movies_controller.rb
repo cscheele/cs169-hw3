@@ -45,7 +45,7 @@ class MoviesController < ApplicationController
   def sort
     @type = params[:id]
     @movies = Movie.all
-    
+    redirect_to movies_path
   end
 
 end
