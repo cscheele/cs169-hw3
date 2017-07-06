@@ -43,9 +43,9 @@ class MoviesController < ApplicationController
   end
   
   def sort
-    @type = params[:id]
-    @movies = Movie.all
-    redirect_to movies_path
+    #@type = params[:id]
+    #@movies = Movie.all
+    #redirect_to movies_path
   end
 
 end
