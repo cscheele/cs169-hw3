@@ -17,24 +17,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    re_direct = false
-    if params[:ratings] == nil
-      @selected_ratings = (session[:selected_ratings] || @@all_ratings)
-    else 
-      @selected_ratings = params[:ratings].keys
-      re_direct = true
-    end
-    if @@sort
-      @movies = Movie.order(@@sort).where({ rating: @selected_ratings})
-    else
-      @movies = Movie.where({ rating: @selected_ratings})
-    end
-    @sort = @@sort
-    @all_ratings = @@all_ratings
-    session[:selected_ratings] = @selected_ratings
-   if re_direct
-     redirect_to movies_path
-   end
+    home
   end
 
   def new
@@ -67,7 +50,24 @@ class MoviesController < ApplicationController
   
   def sort
     @@sort = params[:type]
-    redirect_to movies_path
+    home
+    render :index
   end
 
+
+  def home
+    if params[:ratings] == nil
+      @selected_ratings = (session[:selected_ratings] || @@all_ratings)
+    else 
+      @selected_ratings = params[:ratings].keys
+    end
+    if @@sort
+      @movies = Movie.order(@@sort).where({ rating: @selected_ratings})
+    else
+      @movies = Movie.where({ rating: @selected_ratings})
+    end
+    @sort = @@sort
+    @all_ratings = @@all_ratings
+    session[:selected_ratings] = @selected_ratings
+  end
 end

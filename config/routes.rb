@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  get '/sort/:type', to: 'movies#sort', as: 'sort'
+  get '/sort/:type', to: 'movies#sort', as: 'sort' do
+    haml :index
+  end
   
   resources :movies 
   
