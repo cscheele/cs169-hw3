@@ -2,11 +2,14 @@ class MoviesController < ApplicationController
 
   @@sort = nil
   @sort = nil
+  @@all_ratings = Movie.order('rating').distinct.pluck(:rating)
+  @all_ratings = nil
+  @selected_ratings = nil
 
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
   end
-
+  
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -14,12 +17,21 @@ class MoviesController < ApplicationController
   end
 
   def index
+    if params[:ratings] == nil
+      @selected_ratings = @@all_ratings
+    else 
+      @selected_ratings = params[:ratings].keys
+    end
     if @@sort
-      @movies = Movie.order(@@sort)
+      @movies = Movie.order(@@sort).where({ rating: @selected_ratings})
     else
-      @movies = Movie.all
+      @movies = Movie.where({ rating: @selected_ratings})
     end
     @sort = @@sort
+    @all_ratings = @@all_ratings
+    @selected_ratings = @selected_ratings
+    puts "********************selected_ratings"
+    puts @selected_ratings
   end
 
   def new

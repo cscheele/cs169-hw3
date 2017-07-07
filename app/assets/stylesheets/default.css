@@ -62,3 +62,7 @@ form label {
   font-weight: bold;
   color: maroon;
 }
+
+#ratings_PG {
+  color: blue;
+}
