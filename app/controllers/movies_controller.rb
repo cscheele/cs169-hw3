@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
 
   def index
     if params[:ratings] == nil
-      @selected_ratings = @@all_ratings
+      @selected_ratings = (session[:selected_ratings] || @@all_ratings)
     else 
       @selected_ratings = params[:ratings].keys
     end
@@ -29,9 +29,8 @@ class MoviesController < ApplicationController
     end
     @sort = @@sort
     @all_ratings = @@all_ratings
-    @selected_ratings = @selected_ratings
-    puts "********************selected_ratings"
-    puts @selected_ratings
+   # @selected_ratings = @selected_ratings
+    session[:selected_ratings] = @selected_ratings
   end
 
   def new
